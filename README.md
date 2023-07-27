@@ -16,8 +16,8 @@ cd ../../..
 kubectl apply -f ./
 ```
 
-
 ## 测试mysql集群是否正常运行
+
 kubectl run mysql-client --image=mysql:5.7 -i --rm --restart=Never --\
   mysql -h mysql-0.mysql -uroot -e'
 CREATE DATABASE test;
@@ -28,5 +28,7 @@ DESCRIBE test.messages;
 ## 参考
 
 [深入理解StatefulSet](https://time.geekbang.org/column/article/41217)
+
 [k8s运行mysql主从架构](https://www.cnblogs.com/wangguishe/p/17027398.html)
+
 [MysqlCluster](https://github.com/Ivanqi/K8sClusterApplication/tree/main/MysqlCluster)
