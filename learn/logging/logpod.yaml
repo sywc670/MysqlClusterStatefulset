@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: logging
+spec:
+  containers:
+  - name: logging
+    image: busybox
+    args:
+      - /bin/sh
+      - -c
+      - >
+        i=1;
+        while true;
+        do 
+          echo "$i:$(date)" >> /var/log/1.log;
+          i=$((i+1));
+          sleep 1;
+        done 
+    volumeMounts:
+      - mountPath: /var/log 
+        name: log
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+  - name: logging-sidecar
+    image: busybox
+    args: [/bin/sh, -c, "tail -f -n+1 /var/log/1.log"]
+    volumeMounts:
+      - mountPath: /var/log
+        name: log 
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"    
+  volumes:
+    - name: log 
+      emptyDir: {}
+
+
